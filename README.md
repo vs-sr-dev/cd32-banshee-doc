@@ -17,9 +17,9 @@ copy.
 
 | Doc | Contents |
 |---|---|
-| [00-overview.md](docs/00-overview.md) | The release, the file inventory, the seventeen-minute session, and the address convention |
+| [00-overview.md](docs/00-overview.md) | The release, the file inventory, two clocks and a link stamp, and the address convention |
 | [01-disc-image.md](docs/01-disc-image.md) | Cue sheet, sector map, five minutes of Red Book, and a 232-sector run that should be 32 |
-| [02-filesystem.md](docs/02-filesystem.md) | ISO 9660 by the field, the `.TM` block, two clocks nineteen months apart, and the session reconstructed to the second |
+| [02-filesystem.md](docs/02-filesystem.md) | ISO 9660 by the field, the `.TM` block, two clocks nineteen months apart, and a floppy-speed write log under the wrong one |
 | [03-boot-chain.md](docs/03-boot-chain.md) | A boot script with a live developer hook and four floppy volume names |
 | [04-compression.md](docs/04-compression.md) | RNC method 1 over the files, method 2 *inside* an executable, and three ways to measure the same disc |
 | [05-loader.md](docs/05-loader.md) | `bans.exe`: six hunks, 1,948 relocations, 71 library calls, and a file table that is a floppy layout |
@@ -83,19 +83,20 @@ disc, in a display mode nothing else in this series uses. A census over
 *files* calls it "hunk executable, not compressed"; its entropy of 7.84 is
 what gives it away.
 
-**Two clocks nineteen months apart, and the wrong one still measures the
-session.** Forty-one of the 45 records are stamped 1992-12-21, on a disc
-mastered 1994-07-08. The executable settles it from inside itself: at file
-offset 0x50, between an `rts` and the next routine, `8/7-94 12:59 CD32 slutp`
-— a link stamp seventeen minutes before the master, written day/month-year
-with a dash, with the Danish word *slut* in it. The wrong clock's span is 15
-minutes 48 seconds and the real window is 17 minutes 10 seconds, so the copy
-fits inside it with 82 seconds to spare and every record on the disc is
-accounted for in one session.
-*(Revised 2026: the A1200 floppy release shows the 1992 stamps were written
-at floppy speed, 7–10 KB/s, on a second machine, so they are not part of the
-mastering session — see the correction in
-[02-filesystem.md](docs/02-filesystem.md).)*
+**Two clocks nineteen months apart, and the wrong one is still a
+stopwatch.** Forty-one of the 45 records are stamped 1992-12-21, on a disc
+mastered 1994-07-08. The executable dates itself: at file offset 0x50, between
+an `rts` and the next routine, `8/7-94 12:59 CD32 slutp` — a link stamp
+seventeen minutes before the master, written day/month-year with a dash, with
+the Danish word *slut* in it. The wrong clock is not noise either: its gaps
+track file size at about 7–10 KB/s, floppy speed, in the retail floppies'
+per-disk write order. The 1992 stamps are a real write log from a second
+machine with no battery clock, which restarted at nearly the same reading on
+every boot, and the files were carried into the mastering tree with their
+dates intact. The first reading of this disc fitted that log inside the
+17-minute mastering window; the A1200 floppy release showed that it does not
+fit. [02-filesystem.md](docs/02-filesystem.md) keeps both the original
+arithmetic and the correction.
 
 **Four languages, and the fourth one has its own alphabet.** German and French
 use ordinary code page 437 (`0x81` ü, `0x94` ö, `0xE1` ß). Danish does not:
@@ -108,7 +109,19 @@ where the Danish alphabet goes after Z.
 `banshee1:` through `banshee4:` to `CD0:`, and the loader's file table carries
 a disk number in every record. Level 3's two halves are on **different disks**,
 which is what happens when a level will not fit on one 880 KB floppy and is
-not something anybody would invent for a compact disc.
+not something anybody would invent for a compact disc. The real four-disk A1200
+release later confirmed it, and compared instruction by instruction it plays
+the same game: the CD32 build is the later branch of the same source
+([19-floppy-vs-cd.md](docs/19-floppy-vs-cd.md)).
+
+**Inside the game (2026, contributed by Gnacik).** Chapters 13–20 go past the
+loader into the game itself: the enemy scripting VM (45 opcodes, 127 sub-ops),
+enemy movement checked tick by tick against emulation, every level and boss,
+scoring and the difficulty curve, the RNG, and what was cut. They also answer
+most of [12-open-questions.md](docs/12-open-questions.md). The message about
+killing animals turns out to be the confirmation of a cheat: without it,
+civilians and animals cannot be hit at all
+([20-unused-content-and-cheats.md](docs/20-unused-content-and-cheats.md)).
 
 **Where the frame ends up: nowhere interesting, and that is the answer.** The
 three Blitter questions take ten minutes and settle it. The only `BLTCON1`
