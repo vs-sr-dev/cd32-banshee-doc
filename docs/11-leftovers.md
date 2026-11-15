@@ -65,6 +65,13 @@ field of their timestamps is zero — not the AmigaDOS epoch with an uptime in
 it, but genuinely nothing, which is what ISOCD writes when the source file has
 no date and no content.
 
+> **Correction (2026).** The date fields are not zero: they are
+> `4E 01 01 00 00 00` = **1978-01-01 00:00:00**, AmigaDOS DateStamp 0, the
+> same value as the root directory record (which has no source object).
+> *Inference:* ISOCD wrote both entries without reading a source file. On the
+> floppy release `scrpt2` is 39 bytes and `Installer` 63,436 bytes; see
+> [12-open-questions.md](12-open-questions.md) Q8 and Q12.
+
 `C/Installer` is Commodore's Installer utility, the thing an Amiga hard-disk
 install script runs. `scrpt2` is a script — the name is `script 2` with the
 vowel dropped to fit an eight-character habit. Together they are **the
@@ -97,6 +104,10 @@ Blitz Basic 2 project icon that on Guardian is the only evidence of that tool
 in the whole build chain. Hashing the `.info` files on Banshee finds nothing
 because there are none.
 
+> **Update (2026).** On the floppy release `/icons` holds `banshee.info`, the
+> installed game's IconX project icon. See
+> [12-open-questions.md](12-open-questions.md) Q9.
+
 ## 5. A thirty-eighth filename that is not a file
 
 At file offset 0x2BCA in `bans.exe`, immediately after the 37th record of the
@@ -117,6 +128,12 @@ records uses, and is not referenced anywhere else in the volume.
 level file, under an older and shorter volume-naming scheme, that the table
 outgrew — the string survived a rename of the four floppy volumes and the
 record that owned it did not.
+
+> **Update (2026).** `bans1:` is the volume label of floppy disk 1, used
+> directly, so the path was valid on floppy. `flev` is unreferenced in both the
+> CD and the floppy build and is on no floppy. See
+> [12-open-questions.md](12-open-questions.md) Q5 and
+> [20-unused-content-and-cheats.md](20-unused-content-and-cheats.md) §2.
 
 Dragonstone's equivalent leftover is a row of seven `0xFFFF` entries where
 level 4's files would have been. Both discs kept the shape of something that
@@ -143,21 +160,19 @@ Note the pair of writes are to `$DFF180` written **absolutely**, not through a
 base register, which is what you type when you are adding four lines to a file
 in a hurry.
 
+> **Correction (2026).** Not a panic handler and not dead code. The offset
+> 0x53C is a `hunk0+` offset (file 0x570). A `bne` at `hunk0+0x51E` jumps here
+> when **`OpenDevice("input.device")` fails**: it is the program's
+> fatal-start-up-error path. See
+> [20-unused-content-and-cheats.md](20-unused-content-and-cheats.md) §3.
+
 ## 7. A message about killing animals
 
 At file offset 0x1F1C4, eight lines of nineteen columns, each terminated by
 `0xFF` and right-padded with spaces to the field width:
 
-```
-    YOU REALLY NEED
-    A MENTAL
-    EXAMINATION.
-
-    HOW CAN ANYONE
-    SERIOUSLY WANT
-    TO KILL ANIMALS
-    AND CIVILIANS.
-```
+Paraphrased (2026; the full text is not reproduced here): the player is told
+they need a mental examination for wanting to kill animals and civilians.
 
 It is not in the four-language table. The whole of the rest of the game's text
 is `english FF german FF french FF danish FF … FE`; this block has one variant
@@ -171,6 +186,12 @@ player who shoots them. The repository cannot run the game to confirm that,
 and nothing in the text region around the block identifies its trigger. What is measured is the block itself:
 eight lines, nineteen columns, `0xFF`-terminated, space-padded, one language,
 outside the table that holds every other string in the game.
+
+> **Answer (2026).** It is the confirmation of a cheat: the high-score name
+> `Mary Whitehouse` or a keyboard sequence copies this block into the
+> hall-of-fame name table and enables a flag without which civilians and
+> animals cannot be hit at all. See [12-open-questions.md](12-open-questions.md)
+> Q7 and [20-unused-content-and-cheats.md](20-unused-content-and-cheats.md) §1b.
 
 It is one of the two things on this disc written in the first person by
 somebody with an opinion. The other is a joke about the hero's name, in
@@ -188,7 +209,8 @@ Danish, that the other three languages do not get.
   colour values that the startup code overwrites before the display is
   enabled, and the same sixteen words appear again at offset 0x20 of the
   327,744-byte picture hunk, in front of the bitmap, where nothing reads them
-  at all.
+  at all. *(Corrected 2026: the copper colours are not stale but saved after
+  a run; see [08-picture-exe.md](08-picture-exe.md).)*
 * **The names in the high-score table** are the team:
   `Hannibal`, `Jade`, `Martin`, `Mac and Roberto`, `Adrian`, `8th Day`,
   `Dan and Toby`, `Jezza` — the programmer, the artist, the musician, Core's
@@ -202,4 +224,11 @@ Danish, that the other three languages do not get.
 * **`soundfx4` was written 7 minutes 28 seconds after everything else**, in a
   copy session whose other 40 gaps all track file size at 150–200 KB/s. It is
   108,871 bytes; its size predicts nine seconds. Something happened in those
-  seven minutes and the disc does not say what.
+  seven minutes and the disc does not say what. *(Corrected 2026: the gaps
+  run at about 7–10 KB/s, floppy speed; see
+  [12-open-questions.md](12-open-questions.md) Q6.)*
+* **`CREDITS` is a working credits display** (added 2026). The `CREDITS` +
+  digit bob each level header points at looks unused in a single-player run,
+  but it blinks for 300 ticks whenever one of the four shared credits is spent
+  ([18-runtime.md](18-runtime.md) §3,
+  [20-unused-content-and-cheats.md](20-unused-content-and-cheats.md) §6).

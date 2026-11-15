@@ -30,6 +30,14 @@ copy.
 | [10-core-design-control.md](docs/10-core-design-control.md) | **Banshee against Dragonstone**, point by point — the first same-label control in this series |
 | [11-leftovers.md](docs/11-leftovers.md) | A debug hook, two empty files, an empty directory, a dead filename, a halt loop, and a message about killing animals |
 | [12-open-questions.md](docs/12-open-questions.md) | Everything unresolved, with the measurement beside it |
+| [13-level-formats-and-floppy.md](docs/13-level-formats-and-floppy.md) | Level file formats, palettes, and the A1200 floppy release by files and strings |
+| [14-enemy-vm.md](docs/14-enemy-vm.md) | The enemy/object scripting VM: object definitions, 45 opcodes, 127 sub-ops, death scripts, `scriptdis.py` |
+| [15-enemy-movement.md](docs/15-enemy-movement.md) | Enemy movement: 27 movement and 4 bullet archetypes, checked tick by tick against emulation |
+| [16-levels-and-bosses.md](docs/16-levels-and-bosses.md) | Each level and boss by scroll position, the two endings, and blocks [3]/[4] of `levelNc` |
+| [17-player-scoring-difficulty.md](docs/17-player-scoring-difficulty.md) | Ship, weapons, shield, pods, score rules, the player rating and the difficulty curve |
+| [18-runtime.md](docs/18-runtime.md) | RNG, input, two players and credits, the shell, sound (no music in play) and display effects |
+| [19-floppy-vs-cd.md](docs/19-floppy-vs-cd.md) | Floppy against CD instruction by instruction: what the CD32 port changed |
+| [20-unused-content-and-cheats.md](docs/20-unused-content-and-cheats.md) | Unused sub-ops, types, bobs and samples, debug leftovers, and every cheat |
 | [notes/file-inventory.md](notes/file-inventory.md) | All 45 directory records with LBA, three sizes, timestamp and SHA-1 |
 | [notes/](notes/) | Raw output of every tool: PVD, sector map, census, copper lists, register scan, string and text tables, and the annotated depacker listing |
 | [cd32-platformnotes-doc](https://github.com/vs-sr-dev/cd32-platformnotes-doc) | **Platform checklist** — what to look for on *any* CD32 or CDTV disc, shared by every Amiga CD pipeline here |
@@ -84,6 +92,10 @@ with a dash, with the Danish word *slut* in it. The wrong clock's span is 15
 minutes 48 seconds and the real window is 17 minutes 10 seconds, so the copy
 fits inside it with 82 seconds to spare and every record on the disc is
 accounted for in one session.
+*(Revised 2026: the A1200 floppy release shows the 1992 stamps were written
+at floppy speed, 7–10 KB/s, on a second machine, so they are not part of the
+mastering session — see the correction in
+[02-filesystem.md](docs/02-filesystem.md).)*
 
 **Four languages, and the fourth one has its own alphabet.** German and French
 use ordinary code page 437 (`0x81` ü, `0x94` ö, `0xE1` ß). Danish does not:
@@ -145,6 +157,13 @@ python3 tools/planar.py      _work/picture/hunk3.bin logo.png \
 | `planar.py` | Planar bitmap renderer: interleaved or not, indexed or HAM8, arbitrary plane order |
 | `dis68k.py` | Capstone M68K with branch targets recomputed from the raw bytes |
 | `m68kdis.py` | The plain Capstone wrapper — from `cd32-guardian-doc` |
+| `adf.py`, `ground.py`, `bobs.py`, `map.py`, `spawns.py`, `samples.py` | Floppy images and level formats ([13](docs/13-level-formats-and-floppy.md)) |
+| `bansexe.py` | Relocated `bans.exe` image and runtime ↔ `hunkN+` ↔ file-offset conversion |
+| `scriptdis.py` | Enemy-script disassembler and `--reach` reachability report ([14](docs/14-enemy-vm.md)) |
+| `movement/`, `rng/` | VM movement extractor and simulator ([15](docs/15-enemy-movement.md)); RNG model ([18](docs/18-runtime.md)) |
+| `answers/` | The scripts behind the 2026 answers in [12-open-questions.md](docs/12-open-questions.md) |
+
+Usage for the newer tools is in [`tools/README.md`](tools/README.md).
 
 **A warning that applies to every listing in these pages.** Capstone's M68K
 backend prints wrong-but-plausible branch displacements, immediates and

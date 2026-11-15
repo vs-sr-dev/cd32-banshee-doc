@@ -17,6 +17,15 @@ templates. Both are dumped in
 
 ### The game screen — 320×256 lores, 256 colours
 
+> **Correction (2026).** This template (copper list A, `hunk4+0x32`) is the
+> **intro and ending screen**, rewritten to hires for the picture files; it is
+> not the game screen. The game screen is a fourth list, D at `hunk4+0x1466`:
+> six planes (plus planes 7–8 for the cloud or light layer), `DDF $48–$B0`,
+> `FMODE $F`, modulo 56, a 256 × 256 window on a 96-byte double-buffered row.
+> The game does use AGA sprites (boss and mid-boss bodies, the final ship;
+> [16-levels-and-bosses.md](16-levels-and-bosses.md)). See
+> [12-open-questions.md](12-open-questions.md) Q3 and Q4.
+
 ```
 DIWSTRT   $2c81      V 44,  H 129
 DIWSTOP   $2cc1      V 300, H 449      -> 320 lores pixels x 256 lines

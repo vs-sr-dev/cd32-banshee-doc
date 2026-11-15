@@ -118,6 +118,13 @@ Sorted by timestamp, the 45 records fall into five groups:
 | 3 dirs | `1994-07-08 13:13:22` … `13:14:37` | ISOCD's own records |
 | PVD | `1994-07-08 13:16:10` | the master |
 
+> **Correction (2026).** The two zero-length records are not "every field
+> zero": their date bytes are `4E 01 01 00 00 00` = 1978-01-01 00:00:00,
+> AmigaDOS DateStamp 0 — the same value as the root directory's record, which
+> has no source object to take a date from. *Inference:* ISOCD wrote these two
+> entries without reading a source file (names in the build list whose files
+> were missing or empty). See [12-open-questions.md](12-open-questions.md) Q12.
+
 A block of files nineteen months before the master is exactly the case the
 platform checklist says to resolve **by asking the file**, before looking for
 a control disc. The file answers.
@@ -162,6 +169,22 @@ accounted for inside one seventeen-minute session on 8 July 1994, and the
 master was cut on top of a build that was still moving — the program was
 linked *during* the same session.
 
+> **Correction (2026) — the "seventeen-minute session" does not hold.** The
+> A1200 floppy release ([13](13-level-formats-and-floppy.md),
+> [19](19-floppy-vs-cd.md)) shows that the 1992 stamps were written at
+> **floppy speed, about 7–10 KB/s** (`level1c` 272,677 B in 28 s, `level2c`
+> 281,827 B in 31 s, identical in the retail floppy session), on a second
+> machine without a battery clock, in the retail floppies' per-disk write
+> order. The mastering machine's clock was correct (`/s`, `/icons`, `/C`).
+> 15 min 48 s of floppy-speed writing plus copying 2.88 MB into the mastering
+> tree (another 5–6 min at that speed) does not fit the 17 min 10 s between the
+> link banner and the PVD, and the retail build carries the same
+> `8/7-94 12:59` banner and the same kind of 1992 stamps, so the stamps need no
+> CD mastering session to explain them. The relative times remain a real write
+> log; they are not part of the mastering session. Which came first — the
+> CD-variant floppy writes or the banner — cannot be pinned down from this
+> data. Details: [12-open-questions.md](12-open-questions.md) Q2 and Q6.
+
 That is worth stating as a method: **a wrong clock is still a stopwatch.**
 When a second, trustworthy clock brackets the wrong one, subtract and check
 that the span fits. If it does, the wrong-clock ordering is a real write log
@@ -193,6 +216,12 @@ hard disk, and then stop tracking it entirely: `soundfx4` is 108,871 bytes and
 sits **7 minutes 28 seconds** after `plyrmisc4`, where its size predicts about
 nine. Something else happened in those seven minutes and the disc does not say
 what.
+
+> **Correction (2026).** The rate above is wrong by a factor of about 20:
+> the gaps track file size at **about 7–10 KB/s**, which is floppy speed, not
+> a hard disk. The `soundfx4` delay belongs to this session only — on retail
+> disk 4 the same file follows `plyrmisc4` by 15 s. See
+> [12-open-questions.md](12-open-questions.md) Q6.
 
 ### The 1992-12-21 coincidence, unresolved
 

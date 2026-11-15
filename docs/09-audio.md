@@ -5,6 +5,17 @@ played through Paula, and two banks of sound effects.
 
 ## Red Book, played while the game runs
 
+> **Correction (2026).** Two errors in this chapter. (1) `io_Command #44` is
+> **`CD_ATTENUATE`**, not `CD_ADDCHANGEINT` (which is 20): `io_Offset =
+> 0x7fff` (volume), `io_Length = 0`, used once to set full volume. (2) **No
+> music plays during gameplay**, on CD or floppy: the game sends `AbortIO` to
+> the CD track at game start and no `CD_PLAYTRACK` for the whole level; the
+> Red Book tracks are menu (track 3) and high-score (track 2) music, and all
+> four Paula channels belong to effects in play. The section title above is
+> therefore wrong. Also, the offsets in the two listings below are `hunk0+`
+> offsets (file = +0x34); the five-line `io_Command` table uses file offsets.
+> Evidence: [18-runtime.md](18-runtime.md) §5.
+
 Track 2 is 2:05.33 and track 3 is 3:00.37 — **five minutes six seconds** of
 44.1 kHz stereo on a disc that could hold seventy-four.
 
@@ -14,7 +25,7 @@ immediates in the code are:
 ```
 file 0x00019e   io_Command #9    IND_ADDHANDLER    input.device
 file 0x000274   io_Command #10   IND_REMHANDLER    input.device
-file 0x00059a   io_Command #44   CD_ADDCHANGEINT   cd.device
+file 0x00059a   io_Command #44   CD_ATTENUATE      cd.device   (corrected 2026)
 file 0x0005dc   io_Command #37   CD_PLAYTRACK      cd.device
 file 0x0006fc   io_Command #32   CD_INFO           cd.device
 ```

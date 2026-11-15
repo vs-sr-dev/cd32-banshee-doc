@@ -87,6 +87,11 @@ The copy fits inside the window with 82 seconds to spare, so the two clocks
 describe one session and the whole master is accounted for to the second.
 [02-filesystem.md](02-filesystem.md) does the arithmetic.
 
+> **Correction (2026).** The floppy release shows the 1992 stamps were
+> written at floppy speed (7–10 KB/s) on a second machine, so they do not fit
+> inside the 17-minute window and are not part of the mastering session; see
+> the correction in [02-filesystem.md](02-filesystem.md).
+
 Three files sit outside the game group and they are exactly the three
 AmigaDOS commands: `Assign` and `Execute` share one timestamp to the second
 (1993-06-17 14:40:04, copied together off a Workbench disk) and `SetPatch` is
@@ -108,6 +113,14 @@ five months later.
 | [10-core-design-control.md](10-core-design-control.md) | **Banshee against Dragonstone, point by point** — the first same-studio control in this series |
 | [11-leftovers.md](11-leftovers.md) | Two empty files, an empty directory, a dead filename, a debug hook, a halt loop, and a message about killing animals |
 | [12-open-questions.md](12-open-questions.md) | Everything unresolved, with the measurement beside it |
+| [13-level-formats-and-floppy.md](13-level-formats-and-floppy.md) | Level file formats, palettes, and the A1200 floppy release by files and strings |
+| [14-enemy-vm.md](14-enemy-vm.md) | The enemy/object scripting VM: object definitions, 45 opcodes, 127 sub-ops, death scripts, `scriptdis.py` |
+| [15-enemy-movement.md](15-enemy-movement.md) | Enemy movement: 27 movement and 4 bullet archetypes, checked tick by tick against emulation |
+| [16-levels-and-bosses.md](16-levels-and-bosses.md) | Each level and boss by scroll position, the two endings, and blocks [3]/[4] of `levelNc` |
+| [17-player-scoring-difficulty.md](17-player-scoring-difficulty.md) | Ship, weapons, shield, pods, score rules, the player rating and the difficulty curve |
+| [18-runtime.md](18-runtime.md) | RNG, input, two players and credits, the shell, sound (no music in play) and display effects |
+| [19-floppy-vs-cd.md](19-floppy-vs-cd.md) | Floppy against CD instruction by instruction: what the CD32 port changed |
+| [20-unused-content-and-cheats.md](20-unused-content-and-cheats.md) | Unused sub-ops, types, bobs and samples, debug leftovers, and every cheat |
 | [notes/](../notes/) | Raw output of every tool |
 | [cd32-platformnotes-doc](https://github.com/vs-sr-dev/cd32-platformnotes-doc) | The platform checklist this pipeline follows |
 

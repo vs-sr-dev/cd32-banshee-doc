@@ -184,6 +184,18 @@ so hunk 2 is `[copper list, 712 bytes][64 colours x 3 bytes = 192 bytes]` =
 **stale copy** that the code overwrites at startup — the same 16 words also
 appear at hunk 3 + 0x20, in front of the bitmap, where nothing reads them.
 
+> **Correction (2026).** Not stale: the colour words in the CD copper list
+> are exactly what the start-up code writes. Compared with the floppy
+> release's uncrunched `picture.exe` (same code except 8 bytes, identical
+> bitmap hunk), the CD copy has the frame counter at code `+0x1bc` = 727
+> against the floppy's 250, and the bitmap pointer (code `+0x1be` =
+> `$00132040`), the eight sprite and eight bitplane pointers and the colour
+> words already filled in — the values the start-up code and the first
+> odd-field update compute with hunk 3 at chip `$132000`. The floppy copy has
+> all of them zero. The **CD build is a separate build written out from memory
+> after it had run** (assemble-run-write in an in-memory assembler), then
+> RNC-crunched. See [12-open-questions.md](12-open-questions.md) Q8.
+
 The copper list's display registers:
 
 ```
@@ -279,3 +291,9 @@ exactly as it found it: `DMACON` restored from the value it saved, interrupts
 re-enabled, and `graphics.library`'s `copinit` written back to `COP1LC`. That
 is a well-behaved program, and it is worth contrasting with the game, which
 takes the machine and keeps it.
+
+> **Update (2026).** What ran it: on the floppy release the hard-disk
+> installation's start script (`scrpt2`: `picture.exe`, then `bans.exe`).
+> On the CD `scrpt2` is empty and nothing runs it. The floppy build waits 250
+> fields (5 s); the 727 here is a CD-era change.
+> [12-open-questions.md](12-open-questions.md) Q8.
